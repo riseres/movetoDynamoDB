@@ -10,7 +10,7 @@ function FetchBusinassMode(customerId, cb){
     cmd += " AND Name =  'BusinessMode' ";
 
 var data = []
-    sql.connect(config, err => {
+new sql.ConnectionPool(config, err => {
         
         const request = new sql.Request()
         request.stream = true // You can set streaming differently for each request 

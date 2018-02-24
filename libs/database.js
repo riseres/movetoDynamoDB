@@ -27,7 +27,7 @@ var aa = function (customerId, mode) {
 
         cmd += ' SELECT * FROM [FoodDbContext].[dbo].[Orders] ';
         cmd += " WHERE CustomerId = '" + customerId + "' ";
-        cmd += " AND Date BETWEEN '2018-01-01 {0}' and '2018-02-28 {0}'"
+        cmd += " AND Date BETWEEN '2017-01-01 {0}' and '2018-02-28 {0}'"
         cmd += " AND IsDeleted = '0' "
 
 
@@ -45,7 +45,7 @@ var aa = function (customerId, mode) {
 
     function run(cb) {
 
-        sql.connect(config, err => {
+        new sql.ConnectionPool(config, err => {
            
             const request = new sql.Request()
             request.stream = true // You can set streaming differently for each request 

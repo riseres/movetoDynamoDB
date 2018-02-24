@@ -14,7 +14,7 @@ function main() {
   console.log("main function runs.....");
   var params = {
     QueueUrl:  "https://sqs.ap-southeast-1.amazonaws.com/610982430783/niceloop-report-email-monthly",
-    MaxNumberOfMessages: 1,
+    MaxNumberOfMessages: 5,
 
     VisibilityTimeout: 30
   };
