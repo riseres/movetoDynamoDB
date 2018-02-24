@@ -1,0 +1,25 @@
+{
+  "name": "movetodynamodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riseres/movetoDynamoDB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riseres/movetoDynamoDB/issues"
+  },
+  "homepage": "https://github.com/riseres/movetoDynamoDB#readme",
+  "dependencies": {
+    "async": "^2.6.0",
+    "aws-sdk": "^2.202.0",
+    "string-builder": "^0.1.4",
+    "stringbuilder": "0.0.11"
+  }
+}

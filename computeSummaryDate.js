@@ -1,50 +1,53 @@
-const sql = require('mssql'),
-    db = require('./libs/database'),
-    _ = require('lodash'),
-    moment = require('moment')
-    ;
+const receiptsService = require("./libs/database"),
+  _ = require("lodash"),
+  moment = require("moment");
 
-var Compute = function (customerId) {
+var Compute = function(customerId, businessMode) {
+  var customerId = customerId;
+  var businessMode = businessMode;
+  //fetch from DB SQL
+  return {
+    run: run
+  };
 
-    var customerId = customerId
-    //fetch from DB SQL
-    return {
-        run: run
-    }
+  function run(cb) {
+     var cp = new receiptsService(customerId, businessMode);
+    cp.run(function(receipt) {
+      var count = 0;
 
-    function run(cb) {
-        console.log("-- customerId: " + customerId)
-        var cp = new db(customerId)
-        cp.run(function (receipt) {
+      //--start compute data
+      var result = _.reduce(
+        receipt,
+        function(acc, value) {
+          var date_shot = moment.utc(value.Date).format("YYYY-MM-DD");
+          if (businessMode == 1) {
+            date_shot = moment.utc(value.Date)
+              .add(-7, "h")
+              .format("YYYY-MM-DD");
+          }
 
-            var count = 0
+          if (acc[date_shot] == undefined) {
+            acc[date_shot] = {
+              customerId: value.CustomerId,
+              date: date_shot,
+              grandTotal: 0,
+              bills: 0
+            };
+          }
 
-            //--start compute data
-            var result = _.reduce(receipt, function (acc, value) {
+          acc[date_shot].grandTotal += value.GrandTotal;
+          acc[date_shot].bills++;
 
-                var date_shot = moment(value.Date).format("YYYY-MM-DD")
-                if (acc[date_shot] == undefined) {
-                    acc[date_shot] = {
-                        customerId: value.CustomerId,
-                        date: moment(value.Date).format("YYYY-MM-DD"),
-                        grandTotal: value.GrandTotal
-                    }
-                } else {
-                    acc[date_shot].grandTotal += value.GrandTotal
-                }
-                count++
-                return acc
-            }, {})
+          count++;
+          return acc;
+        },
+        {}
+      );
+ 
 
-            // //--sent result
-            console.log("record_count: " + count)
-            console.log(result)
+      cb(result);
+    });
+  }
+};
 
-            cb(result)
-        })
-    }
-
-}
-
-
-module.exports = Compute
+module.exports = Compute;
