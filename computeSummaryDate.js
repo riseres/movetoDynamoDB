@@ -10,14 +10,15 @@ var Compute = function(customerId, businessMode) {
     run: run
   };
 
-  function run(cb) {
+  function run(cb, setBillCallback) {
      var cp = new receiptsService(customerId, businessMode);
-    cp.run(function(receipt) {
+    cp.run(function(receipts) {
       var count = 0;
 
+      setBillCallback(receipts.length)
       //--start compute data
       var result = _.reduce(
-        receipt,
+        receipts,
         function(acc, value) {
           var date_shot = moment.utc(value.Date).format("YYYY-MM-DD");
           if (businessMode == 1) {

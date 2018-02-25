@@ -45,9 +45,9 @@ var aa = function (customerId, mode) {
 
     function run(cb) {
 
-        new sql.ConnectionPool(config, err => {
+    var pool2 =    new sql.ConnectionPool(config, err => {
            
-            const request = new sql.Request()
+            const request = pool2.request() //new sql.Request()
             request.stream = true // You can set streaming differently for each request 
             request.query(command()) // or request.execute(procedure) 
 
@@ -65,13 +65,13 @@ var aa = function (customerId, mode) {
             request.on('error', err => {
                 // May be emitted multiple times 
                 debugger
-                sql.close()
+                pool2.close() // sql.close()
             })
 
             request.on('done', result => {
                 // Always emitted as the last one 
 
-                sql.close()
+                pool2.close() // sql.close()
 
                
                 cb(data);

@@ -10,9 +10,11 @@ function FetchBusinassMode(customerId, cb){
     cmd += " AND Name =  'BusinessMode' ";
 
 var data = []
-new sql.ConnectionPool(config, err => {
+var pool1 = new sql.ConnectionPool(config, err => {
         
-        const request = new sql.Request()
+
+    debugger
+        const request =  pool1.request() //   new sql.Request()
         request.stream = true // You can set streaming differently for each request 
         request.query(cmd) // or request.execute(procedure) 
 
@@ -30,13 +32,13 @@ new sql.ConnectionPool(config, err => {
         request.on('error', err => {
             // May be emitted multiple times 
             debugger
-            sql.close()
+           pool1.close()// sql.close()
         })
 
         request.on('done', result => {
             // Always emitted as the last one 
 
-            sql.close()
+           pool1.close()// sql.close()
 
            
             if(data.length == 0){
@@ -50,7 +52,6 @@ new sql.ConnectionPool(config, err => {
         })
 
     })
-
 
 }
 
