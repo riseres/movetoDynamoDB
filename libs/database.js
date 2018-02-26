@@ -27,7 +27,7 @@ var aa = function (customerId, mode) {
 
         cmd += ' SELECT * FROM [FoodDbContext].[dbo].[Orders] ';
         cmd += " WHERE CustomerId = '" + customerId + "' ";
-        cmd += " AND Date BETWEEN '2018-02-20 {0}' and '2018-02-28 {0}'"
+        cmd += " AND Date BETWEEN '2018-02-22 {0}' and '2018-02-28 {0}'"
         cmd += " AND IsDeleted = '0' "
 
 
