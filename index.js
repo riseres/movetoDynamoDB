@@ -17,7 +17,7 @@ function main() {
   var params = {
     QueueUrl:
       "https://sqs.ap-southeast-1.amazonaws.com/610982430783/niceloop-report-email-monthly",
-    MaxNumberOfMessages: 2,
+    MaxNumberOfMessages: 10,
 
     VisibilityTimeout: 60
   };
@@ -98,7 +98,7 @@ function main() {
 
         setTimeout(function  (params) {
           main();
-        }, 30 *1000)
+        }, 10 *1000)
         
       }
     );
